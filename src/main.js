@@ -778,9 +778,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     countAmout();
-
-
   }
+
+  initPageFunctions();
 
   barba.init({
     transitions: [{
