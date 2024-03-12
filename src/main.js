@@ -1,5 +1,7 @@
+import barba from '@barba/core';
 
-function initPageFunctions() {
+function initialization() {
+
   function scalingText() {
     const testimonials = document.querySelectorAll('.review_text')
 
@@ -193,6 +195,12 @@ function initPageFunctions() {
     var h = {};
     var hovered = { el: null, id: null };
 
+    const svgWrappers = document.querySelectorAll('.dots');
+
+    if (svgWrappers.length < 0) return;
+
+    addSvg(svgWrappers)
+
     document.addEventListener('mousemove', function (e) {
       mPos = [e.clientX || mPos[0], e.clientY || mPos[1]];
 
@@ -242,12 +250,13 @@ function initPageFunctions() {
       }
       else {
         hovered.el = e.target.closest('.dots');
-        hovered.id = hovered.el.getElementsByTagName('svg')[0].id;
+        if (hovered.el.getElementsByTagName('svg')[0]) {
+          hovered.id = hovered.el.getElementsByTagName('svg')[0].id;
+        }
       }
       document.dispatchEvent(new Event('mousemove'));
     });
 
-    addSvg(document.getElementsByClassName('dots'));
     animate();
 
     function animate() {
@@ -356,7 +365,6 @@ function initPageFunctions() {
 
     let lazyVideos = [...document.querySelectorAll(".js-video")];
 
-    console.log(lazyVideos.length)
     if (lazyVideos.length < 0) return;
     const handleDisplayNone = (element) => {
       const computedStyles = window.getComputedStyle(element);
@@ -396,6 +404,8 @@ function initPageFunctions() {
             // find .project-item closest to video
             const projectItem = video.target.closest('.project-item');
 
+            video.target.play();
+
             video.target.classList.add("loaded");
             video.target.classList.remove("lazy");
           } else {
@@ -419,6 +429,7 @@ function initPageFunctions() {
         (filterInstances) => {
           const [filterInstance] = filterInstances
 
+          if (!filterInstance) return;
           filterInstance.listInstance.on('renderitems', (renderedItems) => {
 
             if (renderedItems.length > 0) {
@@ -570,9 +581,10 @@ function initPageFunctions() {
 
   function handleCreateSVG() {
     const customSvg = document.querySelector('.custom-svg')
-    const paragraph = customSvg.querySelector('p')
 
-    if (customSvg && paragraph) {
+
+    if (customSvg) {
+      const paragraph = customSvg.querySelector('p')
       const paragraphText = paragraph.textContent
       customSvg.innerHTML = paragraphText
     }
@@ -780,23 +792,19 @@ function initPageFunctions() {
   countAmout();
 }
 
-initPageFunctions();
+initialization();
 
 barba.init({
   transitions: [{
-    name: 'no-transition',
-    beforeLeave(data) {
-      gsap.set(data.current.container, { opacity: 0 });
+    name: 'default-transition',
+    leave(data) {
+      return gsap.set(data.current.container, { opacity: 0 });
     },
-    beforeEnter(data) {
-      gsap.set(data.next.container, { opacity: 1 });
-    },
-    afterLeave(data) {
-      window.scrollTo(0, 0);
-      initPageFunctions();
+    enter(data) {
+      return () => {
+        gsap.set(data.next.container, { opacity: 1 });
+        initialization();
+      };
     }
   }]
 });
-
-
-console.log('test')
