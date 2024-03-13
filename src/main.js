@@ -59,7 +59,6 @@ function initialization() {
 
   scalingText();
 
-
   function handleBlank() {
     const links = document.querySelectorAll("a");
 
@@ -109,6 +108,8 @@ function initialization() {
 
         if (categoryText.length > 1) {
           projectLine.textContent = arrText.join(", ");
+        } else {
+          projectLine.textContent = arrText;
         }
       });
     }
@@ -360,121 +361,6 @@ function initialization() {
   }
 
   brandHover();
-
-  function handleVideos() {
-
-    let lazyVideos = [...document.querySelectorAll(".js-video")];
-
-    if (lazyVideos.length < 0) {
-      const handleDisplayNone = (element) => {
-        const computedStyles = window.getComputedStyle(element);
-
-        if (computedStyles.display === 'none') {
-          element.remove();
-        }
-      };
-
-      lazyVideos.forEach(item => {
-        let src = item.querySelector('source');
-        let dataSrc = src.getAttribute('data-src');
-
-
-        handleDisplayNone(item.parentElement)
-        if (!dataSrc) {
-          item.parentElement.remove();
-        }
-      });
-    }
-
-    if ("IntersectionObserver" in window) {
-      let lazyVideoObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (video) {
-          if (video.isIntersecting) {
-            for (let source in video.target.children) {
-              let videoSource = video.target.children[source];
-              if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
-                videoSource.src = videoSource.dataset.src;
-              }
-            }
-
-            // video.tareget.load only if it's not loaded
-            if (!video.target.classList.contains('loaded')) {
-              video.target.load();
-            }
-
-            // find .project-item closest to video
-            const projectItem = video.target.closest('.project-item');
-
-            video.target.play();
-
-            video.target.classList.add("loaded");
-            video.target.classList.remove("lazy");
-          } else {
-            video.target.pause();
-            video.target.currentTime = 0;
-          }
-        });
-      });
-
-      lazyVideos.forEach(function (lazyVideo) {
-        lazyVideoObserver.observe(lazyVideo);
-      });
-
-      // arrays for check 
-      const squareArray = [4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 54, 59];
-      const rectangleArray = [2, 7, 12, 17, 22, 27, 32, 37, 42, 47, 52, 57];
-
-      window.fsAttributes = window.fsAttributes || []
-      window.fsAttributes.push([
-        'cmsfilter',
-        (filterInstances) => {
-          const [filterInstance] = filterInstances
-
-          if (!filterInstance) return;
-          filterInstance.listInstance.on('renderitems', (renderedItems) => {
-
-            if (renderedItems.length > 0) {
-              renderedItems.forEach(item => {
-                item.element.classList.remove('square', 'rectangle')
-                let videos = item.element.querySelectorAll('.loaded');
-                let notLoadedVideos = item.element.querySelectorAll('.lazy');
-                if (notLoadedVideos.length > 0) {
-                  // call lazyVideoObserver 
-                  notLoadedVideos.forEach(video => {
-                    lazyVideoObserver.observe(video);
-                  });
-                }
-                if (videos.length > 0) {
-                  videos.forEach(video => {
-                    let source = video.querySelector('source');
-                    if (source.src !== '') {
-                      video.play();
-                    }
-                  })
-                }
-              })
-              const renderedItemsLength = renderedItems.length;
-              squareArray.forEach(number => {
-                if (renderedItemsLength === number) {
-                  renderedItems[number - 1].element.classList.add('square');
-                }
-              });
-
-              rectangleArray.forEach(number => {
-                if (renderedItemsLength === number) {
-                  renderedItems[number - 2].element.classList.add('rectangle');
-                  renderedItems[number - 1].element.classList.add('rectangle');
-                }
-              });
-            }
-
-          })
-        },
-      ]);
-    }
-  }
-
-  handleVideos();
 
   function handleFilters() {
     // Filter
