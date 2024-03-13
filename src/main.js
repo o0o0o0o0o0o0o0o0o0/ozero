@@ -793,7 +793,7 @@ function initialization() {
 }
 
 initialization();
-
+/*
 barba.init({
   transitions: [{
     name: 'default-transition',
@@ -808,3 +808,4 @@ barba.init({
     }
   }]
 });
+*/
