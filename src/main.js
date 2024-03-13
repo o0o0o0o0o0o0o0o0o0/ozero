@@ -365,25 +365,26 @@ function initialization() {
 
     let lazyVideos = [...document.querySelectorAll(".js-video")];
 
-    if (lazyVideos.length < 0) return;
-    const handleDisplayNone = (element) => {
-      const computedStyles = window.getComputedStyle(element);
+    if (lazyVideos.length < 0) {
+      const handleDisplayNone = (element) => {
+        const computedStyles = window.getComputedStyle(element);
 
-      if (computedStyles.display === 'none') {
-        element.remove();
-      }
-    };
+        if (computedStyles.display === 'none') {
+          element.remove();
+        }
+      };
 
-    lazyVideos.forEach(item => {
-      let src = item.querySelector('source');
-      let dataSrc = src.getAttribute('data-src');
+      lazyVideos.forEach(item => {
+        let src = item.querySelector('source');
+        let dataSrc = src.getAttribute('data-src');
 
 
-      handleDisplayNone(item.parentElement)
-      if (!dataSrc) {
-        item.parentElement.remove();
-      }
-    });
+        handleDisplayNone(item.parentElement)
+        if (!dataSrc) {
+          item.parentElement.remove();
+        }
+      });
+    }
 
     if ("IntersectionObserver" in window) {
       let lazyVideoObserver = new IntersectionObserver(function (entries) {
