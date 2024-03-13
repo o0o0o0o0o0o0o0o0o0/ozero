@@ -102,7 +102,10 @@ function initialization() {
         let arrText = [];
 
         categoryText.forEach(el => {
-          arrText.push(el.textContent);
+          if (!el.classList.contains('w-condition-invisible')) {
+            arrText.push(el.textContent);
+          }
+
         });
 
 
@@ -696,3 +699,12 @@ barba.init({
   }]
 });
 */
+
+const mentorsNestElements = document.querySelectorAll('.mentors-list__item.is--nest');
+const mentorsNestList = document.querySelector('.mentors-list.main');
+
+if (mentorsNestElements.length > 0) {
+  mentorsNestElements.forEach((element) => {
+    mentorsNestList.appendChild(element);
+  });
+}
