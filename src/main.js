@@ -500,32 +500,6 @@ function initialization() {
 
   handleSliders();
 
-  function addNonScalingStrokes() {
-    const svgs = document.querySelectorAll("svg");
-
-    if (svgs.length > 0) {
-      svgs.forEach((svg) => {
-        addNonScalingStroke(svg);
-      });
-    }
-
-    function addNonScalingStroke(svg) {
-      const paths = svg.querySelectorAll("path");
-      const circles = svg.querySelectorAll("circle");
-      const ellipses = svg.querySelectorAll("ellipse");
-      const rect = svg.querySelectorAll("rect");
-      const polygons = svg.querySelectorAll("polygon");
-
-      const allPaths = [...paths, ...circles, ...ellipses, ...rect, ...polygons];
-
-      allPaths.forEach((path) => {
-        path.setAttribute("vector-effect", "non-scaling-stroke");
-      });
-    }
-  }
-
-  addNonScalingStrokes();
-
   function handleClocks() {
     const clocks = document.querySelectorAll('.clock');
 
@@ -630,15 +604,53 @@ function initialization() {
   handleFormatListItems();
 
   function handleSVGCreating() {
-    const svgs = document.querySelectorAll('.svg-code')
+    const svgs = document.querySelectorAll('.svg-code');
+
     svgs.forEach(function (element, index) {
       let svgCode = element.textContent;
-      let svgElement = new DOMParser().parseFromString(svgCode, 'image/svg+xml').querySelector('svg');
-      element.parentNode.insertBefore(svgElement, element.nextSibling);
+
+      try {
+        let svgElement = new DOMParser().parseFromString(svgCode, 'image/svg+xml').querySelector('svg');
+
+        if (svgElement) {
+          // Check if the parsing was successful and a valid SVG element is obtained
+          element.parentElement.insertBefore(svgElement, element.nextSibling);
+        } else {
+          console.error('Failed to parse SVG code or no valid SVG element found:', svgCode);
+        }
+      } catch (error) {
+        console.error('Error parsing SVG code:', error);
+      }
     });
   }
 
   handleSVGCreating();
+
+  function addNonScalingStrokes() {
+    const svgs = document.querySelectorAll("svg");
+
+    if (svgs.length > 0) {
+      svgs.forEach((svg) => {
+        addNonScalingStroke(svg);
+      });
+    }
+
+    function addNonScalingStroke(svg) {
+      const paths = svg.querySelectorAll("path");
+      const circles = svg.querySelectorAll("circle");
+      const ellipses = svg.querySelectorAll("ellipse");
+      const rect = svg.querySelectorAll("rect");
+      const polygons = svg.querySelectorAll("polygon");
+
+      const allPaths = [...paths, ...circles, ...ellipses, ...rect, ...polygons];
+
+      allPaths.forEach((path) => {
+        path.setAttribute("vector-effect", "non-scaling-stroke");
+      });
+    }
+  }
+
+  addNonScalingStrokes();
 
   function handleVideosOG() {
     const videoSourceElement = document.querySelector('.video-cover video source');
