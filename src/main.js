@@ -681,11 +681,13 @@ function initialization() {
     const awardElements = document.querySelectorAll('.award-cl-item');
     const awardsNumberAmount = document.querySelector('.awards-number-amount');
     const workAwardWr = document.querySelector('.work-award-wr');
+    const workText = document.querySelector('.work-award-wr p')
 
-
-    if (awardElements.length > 0) {
-      const awardCounter = awardElements.length;
-      awardsNumberAmount.textContent = awardCounter;
+    if (awardElements.length > 1) {
+      awardsNumberAmount.textContent = awardElements.length;
+    } else if (awardElements.length === 1) {
+      workText.textContent = 'Got:'
+      console.log(workAwardWr)
     } else if (workAwardWr) {
       workAwardWr.style.display = 'none';
     }
