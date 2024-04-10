@@ -1,5 +1,3 @@
-import barba from '@barba/core';
-
 function initialization() {
 
   function scalingText() {
@@ -686,8 +684,7 @@ function initialization() {
     if (awardElements.length > 1) {
       awardsNumberAmount.textContent = awardElements.length;
     } else if (awardElements.length === 1) {
-      workText.textContent = 'Got:'
-      console.log(workAwardWr)
+      workText.textContent = 'Got'
     } else if (workAwardWr) {
       workAwardWr.style.display = 'none';
     }
@@ -697,22 +694,6 @@ function initialization() {
 }
 
 initialization();
-/*
-barba.init({
-  transitions: [{
-    name: 'default-transition',
-    leave(data) {
-      return gsap.set(data.current.container, { opacity: 0 });
-    },
-    enter(data) {
-      return () => {
-        gsap.set(data.next.container, { opacity: 1 });
-        initialization();
-      };
-    }
-  }]
-});
-*/
 
 const mentorsNestElements = document.querySelectorAll('.mentors-list__item.is--nest');
 const mentorsNestList = document.querySelector('.mentors-list.main');
