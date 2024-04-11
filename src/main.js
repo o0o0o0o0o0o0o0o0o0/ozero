@@ -489,7 +489,7 @@ function initialization() {
           spaceBetween: 30,
           effect: "fade",
           autoplay: {
-            delay: 2000,
+            delay: 1000,
           },
           easing: 'linear',
           speed: 0,
