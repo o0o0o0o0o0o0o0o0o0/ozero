@@ -486,13 +486,11 @@ function initialization() {
     if (sliders.length > 0) {
       sliders.forEach(slider => {
         const swiper = new Swiper(slider, {
-          spaceBetween: 30,
           effect: "fade",
           autoplay: {
             delay: 1000,
           },
-          easing: 'linear',
-          speed: 0,
+          speed: 10,
         });
       });
     }
