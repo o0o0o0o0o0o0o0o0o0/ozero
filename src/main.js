@@ -354,14 +354,15 @@ function initialization() {
       return n
     }
 
-    function isTouchDevice() {
-      return (('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0) ||
-        (navigator.msMaxTouchPoints > 0));
-    }
+
   }
 
   //check if device is not android mobile and not touch device and not iphone and not ipad
+  function isTouchDevice() {
+    return (('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0) ||
+      (navigator.msMaxTouchPoints > 0));
+  }
   if (!navigator.userAgent.match(/Android/i) && !isTouchDevice() && !navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
     brandHover();
   }
