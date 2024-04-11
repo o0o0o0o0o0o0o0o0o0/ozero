@@ -495,7 +495,7 @@ function initialization() {
           options = {
             effect: "fade",
             autoplay: {
-              delay: 1000,
+              delay: 750,
             },
             speed: 10,
           }
