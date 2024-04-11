@@ -361,7 +361,10 @@ function initialization() {
     }
   }
 
-  brandHover();
+  //check if device is not android mobile and not touch device and not iphone and not ipad
+  if (!navigator.userAgent.match(/Android/i) && !isTouchDevice() && !navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+    brandHover();
+  }
 
   function handleFilters() {
     // Filter
