@@ -488,14 +488,27 @@ function initialization() {
     const sliders = document.querySelectorAll('.swiper')
 
     if (sliders.length > 0) {
+      let options = {}
+
       sliders.forEach(slider => {
-        const swiper = new Swiper(slider, {
-          effect: "fade",
-          autoplay: {
-            delay: 1000,
-          },
-          speed: 10,
-        });
+        if (slider.classList.contains('is--services')) {
+          options = {
+            effect: "fade",
+            autoplay: {
+              delay: 1000,
+            },
+            speed: 10,
+          }
+        } else {
+          options = {
+            effect: "fade",
+            autoplay: {
+              delay: 5000,
+            },
+            speed: 1000,
+          }
+        }
+        const swiper = new Swiper(slider, options);
       });
     }
   }
