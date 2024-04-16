@@ -96,7 +96,7 @@ function initialization() {
     if (projectItems) {
       projectItems.forEach(item => {
         const categoryText = item.querySelectorAll('.categories-hidden'),
-          projectLine = item.querySelector('.project-line');
+          projectLine = item.querySelectorAll('.project-line');
         let arrText = [];
 
         categoryText.forEach(el => {
@@ -108,9 +108,13 @@ function initialization() {
 
 
         if (categoryText.length > 1) {
-          projectLine.textContent = arrText.join(", ");
+          projectLine.forEach(el => {
+            el.textContent = arrText.join(", ");
+          });
         } else {
-          projectLine.textContent = arrText;
+          projectLine.forEach(el => {
+            el.textContent = arrText;
+          });
         }
       });
     }
@@ -357,7 +361,6 @@ function initialization() {
 
   }
 
-  //check if device is not android mobile and not touch device and not iphone and not ipad
   function isTouchDevice() {
     return (('ontouchstart' in window) ||
       (navigator.maxTouchPoints > 0) ||
